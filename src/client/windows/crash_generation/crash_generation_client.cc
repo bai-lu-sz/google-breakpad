@@ -280,7 +280,7 @@ HANDLE CrashGenerationClient::ConnectToPipe(const wchar_t* pipe_name,
   }
 
   for (int i = 0; i < kPipeConnectMaxAttempts; ++i) {
-    HANDLE pipe = CreateFile(pipe_name,
+    HANDLE pipe = CreateFileW(pipe_name,
                              pipe_access,
                              0,
                              NULL,

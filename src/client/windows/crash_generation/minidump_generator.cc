@@ -466,7 +466,7 @@ bool MinidumpGenerator::GenerateDumpFile(wstring* dump_path) {
     return false;
   }
 
-  dump_file_ = CreateFile(dump_file_path.c_str(),
+  dump_file_ = CreateFileW(dump_file_path.c_str(),
                           GENERIC_WRITE,
                           0,
                           NULL,
@@ -499,9 +499,9 @@ bool MinidumpGenerator::GenerateFullDumpFile(wstring* full_dump_path) {
     return false;
   }
   full_dump_file_path.resize(full_dump_file_path.size() - 4);  // strip .dmp
-  full_dump_file_path.append(TEXT("-full.dmp"));
+  full_dump_file_path.append(L"-full.dmp");
 
-  full_dump_file_ = CreateFile(full_dump_file_path.c_str(),
+  full_dump_file_ = CreateFileW(full_dump_file_path.c_str(),
                                GENERIC_WRITE,
                                0,
                                NULL,
@@ -572,7 +572,7 @@ bool MinidumpGenerator::GenerateDumpFilePath(wstring* file_path) {
   create_uuid(&id);
   wstring id_str = GUIDString::GUIDToWString(&id);
 
-  *file_path = dump_path_ + TEXT("\\") + id_str + TEXT(".dmp");
+  *file_path = dump_path_ + L"\\" + id_str + L".dmp";
   return true;
 }
 

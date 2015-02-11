@@ -298,7 +298,7 @@ HANDLE CrashGenerationClient::ConnectToPipe(const wchar_t* pipe_name,
     }
 
     // Cannot continue retrying if wait on pipe fails.
-    if (!WaitNamedPipe(pipe_name, kPipeBusyWaitTimeoutMs)) {
+    if (!WaitNamedPipeW(pipe_name, kPipeBusyWaitTimeoutMs)) {
       break;
     }
   }
@@ -376,7 +376,7 @@ bool CrashGenerationClient::SignalCrashEventAndWait() {
 HANDLE CrashGenerationClient::DuplicatePipeToClientProcess(const wchar_t* pipe_name,
                                                            HANDLE hProcess) {
   for (int i = 0; i < kPipeConnectMaxAttempts; ++i) {
-    HANDLE local_pipe = CreateFile(pipe_name, kPipeDesiredAccess,
+    HANDLE local_pipe = CreateFileW(pipe_name, kPipeDesiredAccess,
                                    0, NULL, OPEN_EXISTING,
                                    kPipeFlagsAndAttributes, NULL);
     if (local_pipe != INVALID_HANDLE_VALUE) {
@@ -395,7 +395,7 @@ HANDLE CrashGenerationClient::DuplicatePipeToClientProcess(const wchar_t* pipe_n
       return INVALID_HANDLE_VALUE;
     }
 
-    if (!WaitNamedPipe(pipe_name, kPipeBusyWaitTimeoutMs)) {
+    if (!WaitNamedPipeW(pipe_name, kPipeBusyWaitTimeoutMs)) {
       return INVALID_HANDLE_VALUE;
     }
   }

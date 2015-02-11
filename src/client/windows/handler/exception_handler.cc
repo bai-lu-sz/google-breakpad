@@ -225,7 +225,7 @@ void ExceptionHandler::Initialize(
       assert(handler_thread_ != NULL);
     }
 
-    dbghelp_module_ = LoadLibrary(L"dbghelp.dll");
+    dbghelp_module_ = LoadLibraryW(L"dbghelp.dll");
     if (dbghelp_module_) {
       minidump_write_dump_ = reinterpret_cast<MiniDumpWriteDump_type>(
           GetProcAddress(dbghelp_module_, "MiniDumpWriteDump"));
@@ -234,7 +234,7 @@ void ExceptionHandler::Initialize(
     // Load this library dynamically to not affect existing projects.  Most
     // projects don't link against this directly, it's usually dynamically
     // loaded by dependent code.
-    rpcrt4_module_ = LoadLibrary(L"rpcrt4.dll");
+    rpcrt4_module_ = LoadLibraryW(L"rpcrt4.dll");
     if (rpcrt4_module_) {
       uuid_create_ = reinterpret_cast<UuidCreate_type>(
           GetProcAddress(rpcrt4_module_, "UuidCreate"));
@@ -904,7 +904,7 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     bool write_requester_stream) {
   bool success = false;
   if (minidump_write_dump_) {
-    HANDLE dump_file = CreateFile(next_minidump_path_c_,
+    HANDLE dump_file = CreateFileW(next_minidump_path_c_,
                                   GENERIC_WRITE,
                                   0,  // no sharing
                                   NULL,
